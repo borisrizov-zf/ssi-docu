@@ -12,7 +12,7 @@ the possibility to also get a [W3C compliant
 DID](https://www.w3.org/TR/did-core/) (Decentralized Identifier). Due to
 the lack of production-ready SSI infrastructure and slow adoption on the
 market, this is in a first step achieved by providing a managed wallet
-(also called \"Custodian\") with a private/public key pair and related
+(also called \Custodian\) with a private/public key pair and related
 DID for a legal entity along with the onboarding. This wallet can then
 be used via the Managed Identity Wallet API by other services or
 applications such as the Self Description Hub or the EDC to issue and
@@ -21,15 +21,15 @@ and create verifiable presentations on behalf of a certain legal entity
 as part of governance processes and use cases. In later steps, the same
 DID and credentials can be transferred to an external wallet managed by
 the legal entity itself, allowing self-sovereign data management and
-communication. Alternatively, a company can already \"bring its own
-DID\" upon onboarding and register it as a self-managed wallet for later
+communication. Alternatively, a company can already \bring its own
+DID\ upon onboarding and register it as a self-managed wallet for later
 interactions with managed wallets for credential and presentation
 exchange.
 
 ## Requirements Overview
 
-The basic requirements for the Managed Identity Wallet can be summarised
-as follows:
+The basic requirements for the Managed Identity Wallet can be summarised as
+follows:
 
 - Establish a base DID and associated base wallet as trust anchor for issuing
   operator related verifiable credentials
@@ -221,10 +221,10 @@ Hyperledger Aries flows and storing them in the agent data.*
 ```
 
 The flow depicted in this sequence follows the Aries flows RFC 0023
-\"DID-Exchange Protocol 1.0\"
+\DID-Exchange Protocol 1.0\
 (<https://github.com/hyperledger/aries-rfcs/blob/main/features/0023-did-exchange/README.md>)
-with implicit invitation by public DID for the connection establishment,
-and RFC 0453 \"Issue Credential Protocol 2.0\"
+with implicit invitation by public DID for the connection establishment, and
+RFC 0453 \Issue Credential Protocol 2.0\
 (<https://github.com/hyperledger/aries-rfcs/tree/main/features/0453-issue-credential-v2>)
 for the credential issuance.
 
