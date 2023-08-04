@@ -110,84 +110,48 @@ service using the following technology stack:
 
 # Building Block View
 
-## Whitebox Overall System
+## Overall System
 
-The service consists of a main API implementation, connected to its own
-PostgreSQL database, two ACA-Py agents (one for base/endorser wallet and
-one multi-tenancy enabled for the managed wallets) with their own
-PostgreSQL database, and an internal Revocation Service..
+The service consists of a main API implementation using SpringBoot and a
+PostgreSQL database to persist data ![](./images/whitebox_overall_system.png)
 
-![](./images/whitebox_overall_system.png)
-
-The API part is internally structured in different packages and classes
-for the API routes, most logic is contained in service classes
-abstracted by interfaces:
+The Java code is organized by responsibilities, e.g. routers, services,
+repositories, etc.
 
 - Routes:
-
-    - Did Document: DID resolution and management
-
-    - VC: issuance and revocation of verifiable credentials
-
-    - VP: issuance and validation of verifiable presentations
-
-    - Wallet: management (CRUD) of identity wallets
-
+    - DID Document: DID resolution and management
+    - Verifiable Credential (VC): issuance and revocation of Verifiable Credentials
+    - Verifiable Presentation (VP): issuance and validation of Verifiable Presentations
+    - Wallet: create/read/update/delete (CRUD) management of identity wallets
 - Services:
-
-    - AcaPyService: Abstraction of calls and response handling of ACA-Py
-
-    - Aries Event Handler: Processing of incoming Aries DID-Comm messages
-      (separate listeners for Base Wallet and Multi-Tenants Wallet)
-
     - Business Partner Data Service: Abstraction of calls and response handling
       of BPDM
-
-    - RevocationService: Abstraction of calls and response handling of the
-      revocation service
-
     - WalletService: General wallet management and orchestration logic
-
-    - WebhookService: Abstraction of external webhook handling (webhooks called
-      by the MIW as callback)
 
 # Runtime View
 
-The currently released API specification and documentation (INT
-environment) can be found under
+The currently released API specification and documentation (INT environment)
+can be found under
 <https://managed-identity-wallets.int.demo.catena-x.net/docs>.
 
 In general, the API covers the following functionality:
 
-- Create, remove and retrieve managed wallets
-
-- Create or update business partner data related credentials
-
+- Create, delete and read managed wallets
+- Create and update business partner data related credentials
 - Manage DID document of the DID of a managed wallet (currently supports only
-  adding or updating service endpoints)
-
-- Generate and store verifiable credentials issued by a particular identifier
+  creating and updating service endpoints)
+- Generate and persist Verifiable Credentials issued by a particular identifier
   of a managed wallet or the base wallet
-
-- Create a verifiable presentation for a given list of VCs and presenter (as
+- Create a Verifiable Presentation for a given list of VCs and presenter (as
   identifier of a managed wallet)
-
-- Validate a given verifiable presentation (convenience functionality,
-  currently only supports Indy DIDs as issuers or holders)
-
+- Validate Verifiable Presentations (convenience functionality, currently only
+  supports Indy DIDs as issuers or holders)
 - Register self-managed wallets based on an existing DID
-
-- Trigger and handle the issue credential Aries flow with the base wallet as
-  the issuer
 
 In the following, the most relevant operations are described as sequence
 diagrams.
 
-*Note that for managed wallets, VCs and VPs are only generated in an
-ephemeral way or stored in the own data store of the API, not by using
-Hyperledger Aries flows and storing them in the agent data.*
-
-### Create Managed Wallet for Legal Entity
+### Create Wallet
 
 ```plantuml
 ```
