@@ -734,6 +734,8 @@ Attestation of membership, currently used for Catena-X membership
 
 # Deployment View
 
+TODO: update deployment docs
+
 A description of the overall structure of components including how to
 run and test it locally as well as on Kubernetes in the cloud is
 available in the GitHub repository:
@@ -746,28 +748,15 @@ in Kubernetes (AKS).
 
 # Cross-cutting Concepts
 
-The main driver behind the Managed Identity Wallet Service was the
-compliance and compatibility with W3C SSI standards als in relation to
-GAIA-X principles. The solution is based on and uses a couple of
-standards and re-usable open-source components that can considered of
-overarching concern:
+The main driver behind the Managed Identity Wallet Service was the compliance
+and compatibility with W3C SSI standards in relation to GAIA-X principles. The
+solution is based on and uses a couple of standards and re-usable open-source
+components that can considered of overarching concern:
 
 - W3C Decentralized Identifiers (DIDs) <https://www.w3.org/TR/did-core/>
-
 - W3C Verifiable Credential Data Model <https://www.w3.org/TR/vc-data-model/>
 
-- W3C Status List 2021 <https://w3c-ccg.github.io/vc-status-list-2021/>
-
-- Linux Foundation Hyperledger Aries (<https://github.com/hyperledger/aries>)
-  incorporating the DIF DIDComm messaging standard
-  (<https://identity.foundation/didcomm-messaging/spec/>)
-
-- Hyperledger Aries Cloud Agent Python
-  (ACA-Py, <https://github.com/hyperledger/aries-cloudagent-python>)
-
-- GAIA-X Federated Services (GXFS) Notarization API Revocation Service
-  reference implementation
-  (<https://gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/-/tree/main/services/revocation>)
+TODO: add more items
 
 # Design Decisions
 
@@ -776,149 +765,65 @@ further development of the Managed Identity Wallet Service.
 
 ### Selection of DID method
 
-Summary: decision was towards Indy DID (did:sov and future did:indy) due
-to the compatibility to the IDUnion network and most available Aries
-agent implementations such as the [Business Partner
-Agent](https://github.com/hyperledger-labs/business-partner-agent). In
-general, the solution should be open to support other DID methods for
-resolution and as the holder or presenter of credentials in the future.
-
-(full details see [DID Method Considerations and
-Selection](file:////display/CORE/DID+Method+Considerations+and+Selection))
-
-### Usage of ACA-Py versus other framework versus own implementation
-
-Summary: The evaluation revealed that ACA-Py can be used with certain
-limitations since it meets the basic requirements. We decided to use it
-to save implementation time, and address the limitations within the
-ACA-Py community, possibly by contributing extensions or fixes in the
-future.
-
-(full details see [ACA-Py local Test and
-Evaluation](file:////display/CORE/ACA-Py+local+Test+and+Evaluation))
+For simplicity-sake we've chosen the `did:web` method, as it is easy to
+implement and reason about. We are fully aware that this method is not 100%
+distributed as there is still a centralized body issuing the DNS records, but
+it will accelerate the development and adoption of SSI and MIW technologies,
+which will inevetably lead to the implementation of more complex did methods.
 
 ### Concept and Implementation of Credential Revocation
 
-Summary: Given the standardisation activities in W3C and the already
-available implementation from the GXFS Notarization Service, the
-recommendation is to use the Status List 2021 approach. For the
-implementation, the revocation service in the GXFS Notarization Service
-should be re-used if possible, ideally without any source code
-dependencies using the published Docker image
-(<https://gitlab.com/gaia-x/data-infrastructure-federation-services/not/notarization-service/container_registry/3120998>).
-
-(full details see [MIW Credential
-Revocation](file:////display/CORE/MIW+Credential+Revocation))
+TODO: tbd
 
 ### Concept and Implementation of Interaction with Self-Managed Wallets
 
-Summary: Since Hyperledger Aries based on DID-Comm seems to evolve into
-an industry standard for VC and VP interoperability (e.g. also in GAIA-X
-specifications) and there are already working implementations (most
-known ACA-Py that we also use in the MIW), it is the preferred option.
-
-(full details see [MIW Interaction with Self-Managed
-Wallets](file:////display/CORE/MIW+Interaction+with+Self-Managed+Wallets))
+TODO: Not in the current plan, tbd...
 
 # Quality Requirements
+
+The work being done on the project has been focused on creating a base
+implementation of the Managed Identity Wallet Service. Thus some compromises
+have been met in order to progress with the development. Those points have been
+addressed in the [Risks and Technical Depts](#Risk and Technical Depts) section
+in greater detail. Nevertheless we've focused on Security and Deployability.
 
 The Managed Identity Wallet sticks to the following Quality Gate
 requirements where relevant and applicable:
 
 - Documentation: Architecture
-
 - Documentation: Administrator\'s Guide
-
 - Documentation: Interfaces
-
 - Documentation: Source Code
-
 - Documentation: Development Process
-
 - Documentation: Standardization - Interoperability and Data Sovereignty
-
 - Compliance: GDPR
-
 - Test Results: Deployment/Installation
-
 - Test Results: Code Quality Analysis
-
 - Test Results: System Integration Tests
-
 - Security & Compliance: Penetration Tests
-
 - Security & Compliance: Threat Modeling
-
 - Security & Compliance: Static Application Security Testing
-
 - Security & Compliance: Dynamic Application Security Testing
-
 - Security & Compliance: Secret scanning
-
 - Security & Compliance: Software Composition Analysis
-
 - Security & Compliance: Container Scan
-
 - Security & Compliance: Infrastructure as Code
 
 # Risks and Technical Debts
 
-## Indy DID
+TODO: Add quality dept
 
-Lacking support in Indy SDK and thus ACA-Py, needed to use did:sov for now
-
-The W3C compliant DID method specification for Indy
-(https://hyperledger.github.io/indy-did-method/) is still fairly new and not
-yet fully implemented in major clients. That is why we had to use the Sovrin
-DID
-(https://sovrin-foundation.github.io/sovrin/spec/did-method-spec-template.html)
-for now, which is not fully W3C compliant and does not contain a network
-    identifier to distinguish different ledgers (e.g. testnet and mainnet) in
-    the DID.
-
-**Recommendation**
-
-The implementation should be adjusted to did:indy as soon as ACA-Py releases support for this.
-
-## Availability of mainnet
-
-I it envisioned to use the IDUnion mainnet as the Indy ledger for a productive
-solution. This mainnet is still under construction and not yet available for
-public use, there is also no committed target date, expectations are towards
-end of 2022, which would be sufficient for the timeline of Catena-X.
-
-**Recommendation**
-
-Escalate to IDUnion contacts when it becomes clear that the expected date of
-general availability can not be met.
-
-## performance
+## Performance
 
 In tests especially with the EDC, response times of the Managed Wallet Service
 were rather poor, taking several seconds for operations like create wallet,
 credential issuance, creation or validation of presentations.
 
-**Recommendation**
+**Recommendation**:
 
-Slow response times need to be analysed and optimised, special load and
-performance tests should be conducted for the most relevant use cases and
-scenarios.
-
-## Lack of development resources and budget
-
-Open issues from implementation of integration with self-managed wallets
-
-- Interaction with a self-managed wallet must still be configured and tested in
-  the cloud setup
-- Request presentation from self-managed wallets is not implemented
-- Issued verifiable credentials to self-managed wallets do not support
-  revocation yet
-- The interaction is only possible with the Catena-X wallet (currently, there
-  is no requirement to do that for other wallets, though)
-
-**Recommendation**
-
-None
+A more comprehensive monitoring framework should be established in order to
+detect the bottlenecks. Although important this step is being postponed, as it
+is not of high relevance to the current stage of the development.
 
 # Glossary
 
