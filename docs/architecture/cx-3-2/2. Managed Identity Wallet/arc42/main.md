@@ -457,7 +457,7 @@ represents a BPN number such as "BPN00000000XS2X".
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        "UseCaseFrameworkConditionCX"
+        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
     ],
     "issuanceDate": "somedate",
     "expirationDate": "somedate",
@@ -465,8 +465,8 @@ represents a BPN number such as "BPN00000000XS2X".
         "id": "[did]",
         "holderIdentifier": "[bpn]",
         "usecase-agreement": {
-            "value": "Behavior Twin",
-            "type": "cx-behavior-twin",
+            <b style="color: yellow">"value": "Behavior Twin",
+            "type": "cx-behavior-twin"</b>,
             "contract-template": "https://public.catena-x.org/contracts/behavior_twin.v1.pdf",
             "contract-version": "1.0.0"
         }
@@ -495,16 +495,16 @@ Attestation of membership, currently used for Catena-X membership
     "id": "[uuid]",
     "type": [
         "VerifiableCredential",
-        "MembershipCredential"
+        <b style="color: yellow">"MembershipCredential"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
     "issuer": "[did]",
     "credentialSubject": {
         "id": "[did]"
-        "type": "MembershipCredential",
+        <b style="color: yellow">"type": "MembershipCredential"</b>,
         "holderIdentifier": "[bpn]",
-        "memberOf": "Catena-X",
+        <b style="color: yellow">"memberOf": "Catena-X"</b>,
         "status": "Active",
         "startTime": "[iso8601-timestamp]",
     }
@@ -524,18 +524,18 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        "DismantlerCredentialCX"
+        <b style="color: yellow">"DismantlerCredentialCX"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
         "id": "[did]",
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]",
         "allowedVehicleBrands": [
             "[brand 1]",
             "[brand 2]",
             "[brand 3]"
-        ]
+        ]</b>
     },
     "proof": {
         "type": "JsonWebSignature2020",
@@ -560,7 +560,7 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        "UseCaseFrameworkConditionCX"
+        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]", //Optional field
@@ -568,8 +568,8 @@ Attestation of membership, currently used for Catena-X membership
         "id": "[did]",
         "holderIdentifier": "[bpn]",
         "usecaseAgreement": {
-            "value": "PCF",
-            "type": "cx-pcf",
+            <b style="color: yellow">"value": "PCF",
+            "type": "cx-pcf"</b>,
             "contract-template": "https://public.catena-x.org/contracts/pcf.v1.pdf",
             "contract-version": "1.0.0"
         }
@@ -597,7 +597,7 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        "UseCaseFrameworkConditionCX"
+        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
@@ -605,8 +605,8 @@ Attestation of membership, currently used for Catena-X membership
         "id": "[did]",
         "holderIdentifier": "[bpn]",
         "usecase-agreement": {
-            "value": "Quality",
-            "type": "cx-quality",
+            <b style="color: yellow">"value": "Quality",
+            "type": "cx-quality"</b>,
             "contract-template": "https://public.catena-x.org/contracts/quality.v1.pdf",
             "contract-version": "1.0.0"
         }
@@ -634,7 +634,7 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        "UseCaseFrameworkConditionCX"
+        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
@@ -642,8 +642,8 @@ Attestation of membership, currently used for Catena-X membership
         "id": "[did]",
         "holderIdentifier": "[bpn]",
         "usecase-agreement": {
-            "value": "Resiliency",
-            "type": "cx-resiliency",
+            <b style="color: yellow">"value": "Resiliency",
+            "type": "cx-resiliency"</b>,
             "contract-template": "https://public.catena-x.org/contracts/resiliency.v1.pdf",
             "contract-version": "1.0.0"
         }
@@ -671,7 +671,7 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        "UseCaseFrameworkConditionCX"
+        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
@@ -679,8 +679,8 @@ Attestation of membership, currently used for Catena-X membership
         "id": "[did]",
         "holderIdentifier": "[bpn]",
         "usecase-agreement": {
-            "value": "Sustainability",
-            "type": "cx-sustainability",
+            <b style="color: yellow">"value": "Sustainability",
+            "type": "cx-sustainability"</b>,
             "contract-template": "https://public.catena-x.org/contracts/sustainability.v1.pdf",
             "contract-version": "1.0.0"
         }
@@ -708,7 +708,7 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        "UseCaseFrameworkConditionCX"
+        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]", //Optional field
@@ -716,8 +716,8 @@ Attestation of membership, currently used for Catena-X membership
         "id": "[did]",
         "holderIdentifier": "[bpn]",
         "usecaseAgreement": {
-            "value": "ID_3.0_Trace",
-            "type": "cx-traceability",
+            <b style="color: yellow">"value": "ID_3.0_Trace",
+            "type": "cx-traceability"</b>,
             "contract-template": "https://public.catena-x.org/contracts/traceabilty.v1.pdf",
             "contract-version": "1.0.0",
         }
