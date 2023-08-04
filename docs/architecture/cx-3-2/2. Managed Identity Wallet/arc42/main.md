@@ -76,9 +76,11 @@ The key stakeholders of the component are:
 
 # Architecture Constraints
 
-The architecture of the Managed Identity Wallet Service follows the
-general principles, guidelines and boundaries from the Tractus-X
-project.
+The architecture of the Managed Identity Wallet Service follows the general
+principles, guidelines and boundaries from the [Tractus-X
+project](https://projects.eclipse.org/projects/automotive.tractusx). You can
+find more details and documentation on the [Tractus-X GitHub
+page](https://github.com/eclipse-tractusx).
 
 # System Scope and Context
 
