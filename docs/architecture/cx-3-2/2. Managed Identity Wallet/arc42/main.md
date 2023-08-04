@@ -364,17 +364,46 @@ end group
 
 ### Permission Handling
 
-For the API access, technical users are authenticated based on bearer
-tokens (JWT) issued by an external IAM system such as Keycloak. Each API
-operation specifies, which scopes/roles are required in order to be
-allowed to execute this operations, additionally the BPN associated to a
-user (expected as a claim in the JWT) is considered to restrict access
-to the DID or wallet of the legal entity the user belongs to.
+For the API access, technical users are authenticated based on bearer tokens
+(JWT) issued by an external IAM system such as Keycloak. Each API operation
+specifies, which scopes/roles are required in order to be allowed to execute
+this operations, additionally the BPN associated to a user (expected as a claim
+in the JWT) is considered when restricting access to the DID or wallet of the
+legal entity the user belongs to. Following are the available scopes:
 
-For details on the permissions see the README section on scopes
-(<https://github.com/eclipse-tractusx/managed-identity-wallets#scopes->)
-as well as the statements about permissions in the API doc
-(<https://managed-identity-wallets.int.demo.catena-x.net/docs>).
+- `view_wallets`
+- `add_wallets`
+- `update_wallets`
+- `delete_wallets`
+- `view_wallet`
+- `add_wallet`
+- `update_wallet`
+
+#### Example
+
+A decoded JWt access token might look like this:
+
+```json
+# header
+{
+    "alg": "HS256",
+    "typ": "JWT"
+}
+# body
+{
+    "sub": "1234",
+    "name": "Max Musterman",
+    "iat": 1516239022,
+    "scope": "view_wallets view_wallet",
+    "bpn": "BPN00000000XS2X"
+}
+# signature
+{
+    ...
+}
+```
+This token would authorize the holder to get a list of wallets or view the
+wallet belonging to the BPN.
 
 ### Data Model / Schemas
 
