@@ -4,27 +4,26 @@
 
 # Introduction and Goals
 
-To align the identity, authentication and data exchange of participants
-with the open and decentralized concepts within
+To align the identity, authentication and data exchange of participants with
+the open and decentralized concepts within
 [GAIA-X](https://www.gxfs.eu/specifications/), especially self-sovereign
-identities, every legal entity associated to a BPNL number should have
-the possibility to also get a [W3C compliant
-DID](https://www.w3.org/TR/did-core/) (Decentralized Identifier). Due to
-the lack of production-ready SSI infrastructure and slow adoption on the
-market, this is in a first step achieved by providing a managed wallet
-(also called \Custodian\) with a private/public key pair and related
-DID for a legal entity along with the onboarding. This wallet can then
-be used via the Managed Identity Wallet API by other services or
-applications such as the Self Description Hub or the EDC to issue and
-retrieve [verifiable credentials](https://www.w3.org/TR/vc-data-model/)
-and create verifiable presentations on behalf of a certain legal entity
-as part of governance processes and use cases. In later steps, the same
-DID and credentials can be transferred to an external wallet managed by
-the legal entity itself, allowing self-sovereign data management and
-communication. Alternatively, a company can already \bring its own
-DID\ upon onboarding and register it as a self-managed wallet for later
-interactions with managed wallets for credential and presentation
-exchange.
+identities, every legal entity associated to a Business Partner Network (BPN)
+number should have the possibility to also get a [W3C compliant Decentralized
+Identifier](https://www.w3.org/TR/did-core/) (DID). Due to the lack of
+production-ready SSI infrastructure and slow adoption on the market, this is in
+a first step achieved by providing a managed wallet with a private/public key
+pair and related DID for a legal entity along with the onboarding. This wallet
+can then be used via the Managed Identity Wallet API by other services or
+applications such as the Self Description Hub or the Eclipse Dataspace
+Connectro (EDC) to issue and retrieve [Verifiable
+Credentials](https://www.w3.org/TR/vc-data-model/) and create Verifiable
+Presentations on behalf of a certain legal entity as part of governance
+processes and use cases. In later steps, the same DID and credentials can be
+transferred to an external wallet managed by the legal entity itself, allowing
+self-sovereign data management and communication. Alternatively, a company can
+already bring its own DID upon onboarding and register it as a self-managed
+wallet for later interactions with managed wallets for credential and
+presentation exchange.
 
 ## Requirements Overview
 
@@ -32,25 +31,25 @@ The basic requirements for the Managed Identity Wallet can be summarised as
 follows:
 
 - Establish a base DID and associated base wallet as trust anchor for issuing
-  operator related verifiable credentials
+  operator related Verifiable Credentials
 
-- Link each BPNL to a unique DID distinguishing two cases
+- Link each BPN to a unique DID distinguishing two cases
 
     - managed: create and register a new DID and managed wallet, and allow the
-      owners or administrators of the BPNL to access the related wallet and
+      owners or administrators of the BPN to access the related wallet and
       credentials via a REST API
 
     - self-managed: connect an existing DID and external wallet provided by the
-      owner or administrator of the BPNL in order to issue verifiable
+      owner or administrator of the BPN in order to issue verifiable
       credentials to and request presentations from the related DID
 
 - Allow other service or user interface components as well as DID owners
-  themselves to issue and store verifiable credentials
+  themselves to issue and store Verifiable Credentials
 
 - Allow other service or user interface components as well as DID owners
-  themselves to create and validate verifiable credentials
+  themselves to create and validate Verifiable Credentials
 
-- Issue and revoke verifiable credentials for consortium related data such as
+- Issue and revoke Verifiable Credentials for consortium related data such as
   the BPN, membership status, business partner data (addresses, bank data etc.)
   according to the onboarding and change processes
 
@@ -70,7 +69,7 @@ follows:
 The key stakeholders of the component are:
 
 - Operating Company: to be compliant with SSI concepts, especially for
-  verifiable presentations in GAIA-X compliant self descriptions
+  Verifiable Presentations in GAIA-X compliant self descriptions
 
 - EDC operators: to be able to use SSI based identity and access management for
   the communication between data consumer and provider
