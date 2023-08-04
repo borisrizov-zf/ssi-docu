@@ -407,202 +407,330 @@ wallet belonging to the BPN.
 
 ### Data Model / Schemas
 
-The Managed Identity Wallet service issues a couple of verifiable
-credentials with the DID of the base wallet as issuer related to
-membership and business partner data. For the credential types and data
-model of those verifiable credentials, an own JSON-LD context was
-defined in a separate GitHub repository
-<https://github.com/catenax-ng/product-core-schemas> and referenced as
-raw content in the verifiable credentials context
-[https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/legalEntity](https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/legalEntityData).
+The Managed Identity Wallet service issues a couple of Verifiable Credentials
+with the DID of the base wallet as issuer related to membership and business
+partner data. For the credential types and data model of those Verifiable
+Credentials, an own JSON-LD context was defined in a separate GitHub repository
+<https://github.com/catenax-ng/product-core-schemas> and referenced as raw
+content in the Verifiable Credentials context
+<https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/legalEntity>.
 The schema defines the following credential types:
 
-#### BpnCredential
+**Note**: all examples highlight the important parts in <b style="color:
+yellow">yellow</b>. The value types are enclosed in brackets, e.g. \[bpn\]
+represents a BPN number such as "BPN00000000XS2X".
 
-Attestation of the BPNL to a particular DID 
+#### BPN Credential
 
-```json
+<pre lang="json">
 {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/businessPartnerData"
+    ],
+    "id": "[uuid]",
+    "type": [
+        "VerifiableCredential",
+        <b style="color: yellow">"BpnCredential"</b>
+    ],
+    "issuer": "[did]",
+    "issuanceDate": "[iso8601-timestamp]",
     "credentialSubject": {
-        "type": ["BpnCredential"],
-        "bpn": "BPNL00000000XS2X",
-        "id": "did:sov:7rB93fLvW5kgujZ4E57ZxL"
+        "id": "[did]"
+        "type": "BpnCredential",
+        <b style="color: yellow">"bpn": "[bpn]"</b>
     }
 }
-```
+</pre>
 
-#### MembershipCredential
+#### Behavior Twin Use Case Credential
+
+<pre lang="json">
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
+    ],
+    "id": "https://public.catena-x.org/contracts/behavior_twin.v1.pdf",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        "UseCaseFrameworkConditionCX"
+    ],
+    "issuanceDate": "somedate",
+    "expirationDate": "somedate",
+    "credentialSubject": {
+        "id": "[did]",
+        "holderIdentifier": "[bpn]",
+        "usecase-agreement": {
+            "value": "Behavior Twin",
+            "type": "cx-behavior-twin",
+            "contract-template": "https://public.catena-x.org/contracts/behavior_twin.v1.pdf",
+            "contract-version": "1.0.0"
+        }
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
+    }
+}
+</pre>
+
+#### Membership Credential
 
 Attestation of membership, currently used for Catena-X membership
 
-```json
+<pre lang="json">
 {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/businessPartnerData"
+    ],
+    "id": "[uuid]",
+    "type": [
+        "VerifiableCredential",
+        "MembershipCredential"
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]",
+    "issuer": "[did]",
     "credentialSubject": {
-        "type": ["MembershipCredential"],
+        "id": "[did]"
+        "type": "MembershipCredential",
+        "holderIdentifier": "[bpn]",
         "memberOf": "Catena-X",
         "status": "Active",
-        "startTime": "2022-11-29T10:37:50Z",
-        "id": "did:sov:7rB93fLvW5kgujZ4E57ZxL"
+        "startTime": "[iso8601-timestamp]",
     }
 }
-```
+</pre>
 
-#### NameCredential
+#### Dismantler Credential
 
-Credential representation of a BPDM name element 
-
-```json
+<pre lang="json">
 {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/businessPartnerData"
+    ],
+    "id": "[uuid]",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        "DismantlerCredentialCX"
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
-        "data": {
-            "value": "Scharr-Tec GmbH & Co KG",
-            "nameType": {
-                "technicalKey": "LOCAL",
-                "name": "The business partner name identifies a business partner in a given context, e.g. a country or region.",
-                "url": ""
-            },
-            "language": {
-                "technicalKey": "undefined",
-                "name": "Undefined"
-            }
-        },
-        "type": [
-            "NameCredential"
-        ],
-        "id": "did:sov:7rB93fLvW5kgujZ4E57ZxL"
+        "id": "[did]",
+        "holderIdentifier": "[bpn]",
+        "allowedVehicleBrands": [
+            "[brand 1]",
+            "[brand 2]",
+            "[brand 3]"
+        ]
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
     }
 }
-```
+</pre>
 
+#### PCF Use Case Credential
 
-#### AddressCredential
-
-Credential representation of a BPDM legal address element
-
-```json
+<pre lang="json">
 {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
+    ],
+    "id": "[uuid]",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        "UseCaseFrameworkConditionCX"
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]", //Optional field
     "credentialSubject": {
-        "data": {
-            "version": {
-                "characterSet": {
-                    "technicalKey": "LATIN",
-                    "name": "Latin"
-                },
-                "language": {
-                    "technicalKey": "en",
-                    "name": "English"
-                }
-            },
-            "contexts": [],
-            "country": {
-                "technicalKey": "DE",
-                "name": "Germany"
-            },
-            "administrativeAreas": [],
-            "postCodes": [
-                {
-                    "value": "70565",
-                    "postCodeType": {
-                        "technicalKey": "OTHER",
-                        "name": "Other type",
-                        "url": ""
-                    }
-                }
-            ],
-            "localities": [
-                {
-                    "value": "Stuttgart",
-                    "localityType": {
-                        "technicalKey": "OTHER",
-                        "name": "Other",
-                        "url": ""
-                    },
-                    "language": {
-                        "technicalKey": "en",
-                        "name": "English"
-                    }
-                }
-            ],
-            "thoroughfares": [
-                {
-                    "value": "Liebknechtstr.",
-                    "number": "50",
-                    "thoroughfareType": {
-                        "technicalKey": "OTHER",
-                        "name": "Other type",
-                        "url": ""
-                    },
-                    "language": {
-                        "technicalKey": "en",
-                        "name": "English"
-                    }
-                }
-            ],
-            "premises": [],
-            "postalDeliveryPoints": [],
-            "types": []
-        },
-        "type": [
-            "AddressCredential"
-        ],
-        "id": "did:sov:7rB93fLvW5kgujZ4E57ZxL"
+        "id": "[did]",
+        "holderIdentifier": "[bpn]",
+        "usecaseAgreement": {
+            "value": "PCF",
+            "type": "cx-pcf",
+            "contract-template": "https://public.catena-x.org/contracts/pcf.v1.pdf",
+            "contract-version": "1.0.0"
+        }
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
     }
 }
+</pre>
 
-```
+#### Quality Use Case Credential
 
-#### BankAccountCredential
-
-Credential representation of a BPDM bank account element
-
-```json
+<pre lang="json">
 {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
+    ],
+    "id": "[uuid]",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        "UseCaseFrameworkConditionCX"
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
-        "data": {
-            "internationalBankAccountIdentifier": "DE52500105172967846858",
-            "internationalBankIdentifier": "INGDDEFFXXX",
-            "currency": {
-                "technicalKey": "EUR",
-                "name": "Euro"
-            }
-        },
-        "type": [
-            "BankAccountCredential"
-        ],
-        "id": "did:sov:7rB93fLvW5kgujZ4E57ZxL"
+        "id": "[did]",
+        "holderIdentifier": "[bpn]",
+        "usecase-agreement": {
+            "value": "Quality",
+            "type": "cx-quality",
+            "contract-template": "https://public.catena-x.org/contracts/quality.v1.pdf",
+            "contract-version": "1.0.0"
+        }
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
     }
 }
-```
+</pre>
 
-#### LegalFormCredential
+#### Resiliency Use Case Credential
 
-Credential representation of the BPDM legal form information
-
-```json
+<pre lang="json">
 {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
+    ],
+    "id": "[uuid]",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        "UseCaseFrameworkConditionCX"
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
-        "data": {
-            "technicalKey": "DE_AG",
-            "name": "Aktiengesellschaft",
-            "mainAbbreviation": "AG",
-            "language": {
-                "technicalKey": "de",
-                "name": "German"
-            },
-            "categories": [
-                {
-                    "name": "AG",
-                    "url": ""
-                }
-            ]
-        },
-        "type": [
-            "LegalFormCredential"
-        ],
-        "id": "did:sov:7rB93fLvW5kgujZ4E57ZxL"
+        "id": "[did]",
+        "holderIdentifier": "[bpn]",
+        "usecase-agreement": {
+            "value": "Resiliency",
+            "type": "cx-resiliency",
+            "contract-template": "https://public.catena-x.org/contracts/resiliency.v1.pdf",
+            "contract-version": "1.0.0"
+        }
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
     }
 }
-```
+</pre>
+
+#### Sustainability Use Case Credential
+
+<pre lang="json">
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
+    ],
+    "id": "[uuid]",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        "UseCaseFrameworkConditionCX"
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]",
+    "credentialSubject": {
+        "id": "[did]",
+        "holderIdentifier": "[bpn]",
+        "usecase-agreement": {
+            "value": "Sustainability",
+            "type": "cx-sustainability",
+            "contract-template": "https://public.catena-x.org/contracts/sustainability.v1.pdf",
+            "contract-version": "1.0.0"
+        }
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
+    }
+}
+</pre>
+
+#### Trace Use Case Credential
+
+<pre lang="json">
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
+    ],
+    "id": "[uuid]",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        "UseCaseFrameworkConditionCX"
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]", //Optional field
+    "credentialSubject": {
+        "id": "[did]",
+        "holderIdentifier": "[bpn]",
+        "usecaseAgreement": {
+            "value": "ID_3.0_Trace",
+            "type": "cx-traceability",
+            "contract-template": "https://public.catena-x.org/contracts/traceabilty.v1.pdf",
+            "contract-version": "1.0.0",
+        }
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
+    }
+}
+</pre>
 
 # Deployment View
 
