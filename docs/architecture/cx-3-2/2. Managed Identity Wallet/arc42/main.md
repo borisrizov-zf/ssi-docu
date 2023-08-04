@@ -154,40 +154,213 @@ diagrams.
 ### Create Wallet
 
 ```plantuml
+title Create Wallet
+
+actor User as user
+
+participant PortalIDP as keycloak
+participant ManagedIdentityWallet as MIW
+
+box "Get Accesstoken"
+  user -> keycloak: Get AccessToken
+  keycloak --> user: AccessToken
+end box
+
+group "Create Wallet"
+    box "Create Wallet"
+        user -> MIW: "/api/wallet" with BPN and Name
+        group "Wallet Creation"  
+            MIW -> MIW: Create Database entry
+            MIW -> MIW: Create Private and Public Key
+            MIW -> MIW: Store Private Key AES encrypted in DB
+            MIW -> MIW: Create DID:web Document
+            MIW -> MIW: Store DID-Document
+        end group
+        group "BPN Credential" 
+            MIW -> MIW: Create BPN Credential
+            MIW -> MIW: Sign JSON-LD BPN Credential with issuer private key (Private Key of Issuer Wallet)
+            MIW -> MIW: Store BPN Credential
+        end group
+        group "Summary Credential" 
+            MIW -> MIW: Access User Wallet
+            MIW -> MIW: Check if Summary Credential is already Created
+            MIW -> MIW: Check BPN Credential is not already in Summary Credential
+            MIW -> MIW: Create Summary Credential with BPN
+            MIW -> MIW: Store Summary Credential in Issuer Wallet
+            MIW -> MIW: Store Summary Credential in Holder Wallet
+        end group
+        MIW --> user: Return Wallet
+    end box
+end group
 ```
 
-### Update Business Partner Data for Managed Wallet
+### Issue Membership Credential
 
 ```plantuml
+title Issue Membership Credential
+
+actor User as User
+
+participant PortalIDP as keycloak
+participant ManagedIdentityWallet as MIW
+
+box "Get Accesstoken"
+  User -> keycloak: Get AccessToken
+  keycloak --> User: AccessToken
+end box
+
+group "Issue Membership"
+    User -> MIW: "/api/credentials/issuer/membership" with BPN
+    group "Create Membership Credential" 
+        MIW -> MIW: Create Use Case Credential
+        MIW -> MIW: Sign JSON-LD Use Case Credential with issuer private key (Private Key of Issuer Wallet)
+        MIW -> MIW: Store Credential in Issuer Wallet
+        MIW -> MIW: Store Credential in Holder Wallet
+    end group
+    group "Summary Credential" 
+        MIW -> MIW: Access User Wallet
+        MIW -> MIW: Check if Summary Credential is already Created
+        MIW -> MIW: Check Membership Credential is not already in Summary Credential
+        MIW -> MIW: Delete Summary Credential in User Wallet
+        MIW -> MIW: Create Summary Credential with specific Use Case
+        MIW -> MIW: Store Summary Credential in Issuer Wallet
+        MIW -> MIW: Store Summary Credential in Holder Wallet
+    end group
+    MIW --> User: Return signed Membership Credential
+end group
 ```
 
-### Issue Credential and Presentation for Managed Wallet
+### Issue Usecase Credential
 
 ```plantuml
+title Issue UseCaseFrameworkCredential
+
+actor User as User
+
+participant PortalIDP as keycloak
+participant ManagedIdentityWallet as MIW
+
+box "Get Accesstoken"
+  User -> keycloak: Get AccessToken
+  keycloak --> User: AccessToken
+end box
+
+group "Issue UseCaseCredential"
+    User -> MIW: "/api/credentials/issuer/framework" with (BPN, Type, ContractVersion, ContractTemplate)
+    group "Use Case Credential" 
+        MIW -> MIW: Create Use Case Credential
+        MIW -> MIW: Sign JSON-LD Use Case Credential with issuer private key (Private Key of Issuer Wallet)
+        MIW -> MIW: Store Credential in Issuer Wallet
+    end group
+    group "Summary Credential" 
+        MIW -> MIW: Access User Wallet
+        MIW -> MIW: Check if Summary Credential is already Created
+        MIW -> MIW: Check Use Case Credential is not already in Summary Credential
+        MIW -> MIW: If not delete Summary Credential in User Wallet
+        MIW -> MIW: Create Summary Credential with specific Use Case
+        MIW -> MIW: Store Summary Credential in Issuer Wallet
+        MIW -> MIW: Store Summary Credential in Holder Wallet
+    end group
+    MIW --> User: Return signed Use Case Credential
+end group
 ```
 
-### Register Self-Managed Wallet
+### Issue Dismantler Credential
 
 ```plantuml
+title Issue Dismantler Credential
+
+actor User as User
+
+participant PortalIDP as keycloak
+participant ManagedIdentityWallet as MIW
+
+box "Get Accesstoken"
+  User -> keycloak: Get AccessToken
+  keycloak --> User: AccessToken
+end box
+
+group "Issue Dismantler Credential"
+    User -> MIW: "/api/credentials/issuer/dismantler" with bpn, activityType, allowedVehicleBrands
+    group "Create Dismantler Credential" 
+        MIW -> MIW: Create Dismantler Credential
+        MIW -> MIW: Sign JSON-LD Dismantler Credential with issuer private key (Private Key of Issuer Wallet)
+        MIW -> MIW: Store Credential in Issuer Wallet
+        MIW -> MIW: Store Credential in Holder Wallet
+    end group
+    group "Summary Credential" 
+        MIW -> MIW: Access User Wallet
+        MIW -> MIW: Check if Summary Credential is already Created
+        MIW -> MIW: Check Dismantler Credential is not already in Summary Credential
+        MIW -> MIW: Delete Summary Credential in User Wallet
+        MIW -> MIW: Create Summary Credential with Dismantler added
+        MIW -> MIW: Store Summary Credential in Issuer Wallet
+        MIW -> MIW: Store Summary Credential in Holder Wallet
+    end group
+    MIW --> User: Return signed Dismantler Credential
+end group
 ```
 
-### Issue Credential from Base Wallet to Self-Managed Wallet
+### Fetch Summary Verifiable Presentation 
 
 ```plantuml
+title Fetch SummaryVP
+
+actor User as User
+
+participant PortalIDP as keycloak
+participant ManagedIdentityWallet as MIW
+
+box "Get Accesstoken"
+  User -> keycloak: Get AccessToken
+  keycloak --> User: AccessToken
+end box
+
+group "Get Summary VP"
+    group "Get Summary Credential" 
+        User -> MIW: "/api/credentials?type=['SummaryCredential']"
+        MIW -> MIW: Lookup Credential in Wallet with Type
+        MIW --> User: Return Credential(s) with Type
+    end group
+    group "Create Summary Presentation" 
+        User -> MIW: "/api/presentations?withAudience=['Audience1','Audience2']+asJwt=true"
+        MIW -> MIW: Issue VP with Audience as JWT
+        MIW --> User: Return signed Presentation
+    end group
+end group
 ```
 
-### Receive Externally Issued Credential to Managed Wallet
+### Validate Verifiable Presentation
 
 ```plantuml
-```
+title Issue Membership Credential
 
-The flow depicted in this sequence follows the Aries flows RFC 0023
-\DID-Exchange Protocol 1.0\
-(<https://github.com/hyperledger/aries-rfcs/blob/main/features/0023-did-exchange/README.md>)
-with implicit invitation by public DID for the connection establishment, and
-RFC 0453 \Issue Credential Protocol 2.0\
-(<https://github.com/hyperledger/aries-rfcs/tree/main/features/0453-issue-credential-v2>)
-for the credential issuance.
+actor User as User
+
+participant PortalIDP as keycloak
+participant ManagedIdentityWallet as MIW
+
+box "Get Accesstoken"
+  User -> keycloak: Get AccessToken
+  keycloak --> User: AccessToken
+end box
+
+group "Verify/Validate Verifiable Presentation"
+    User -> MIW: "/api/presentations/validation?withDateValidation=true" with VP
+    group "Presentation Validation" 
+        MIW -> MIW: Check Presentation is not expired
+        MIW -> MIW: Validate Presentation JsonLD
+        MIW -> MIW: Verify Presentation Signature
+    end group
+    group "Credential Validation"
+        MIW -> MIW: Extract VCs
+        MIW -> MIW: Check Credential is not expired
+        MIW -> MIW: Validate Credential JsonLD
+        MIW -> MIW: Verify Credential Signature
+    end group
+    MIW --> User: Return Valid or Invalid + Reason
+end group
+```
 
 ### Permission Handling
 
