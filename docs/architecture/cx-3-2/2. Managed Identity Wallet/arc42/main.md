@@ -101,15 +101,11 @@ also directly connect peer-to-peer with other DID agents.
 The Managed Identity Wallet is implemented as an independent REST API
 service using the following technology stack:
 
-- Ktor Framework (Kotlin) on JDK 17
-
-- PostgreSQL database
-
-- GXFS Notarization API Revocation service (third-party Docker image,
-  Quarkus-based implementation)
-
-- Gradle build
-
+- Java 17 as a base programming language
+- SpringBoot as an encompassing framework
+- PostgreSQL as a database backend
+- Gradle as a build tool
+- Hashicorp Vault for secrets management
 - Dockerized setup for Kubernetes with Helm
 
 # Building Block View
