@@ -417,8 +417,14 @@ content in the Verifiable Credentials context
 The schema defines the following credential types:
 
 **Note**: all examples highlight the important parts in <b style="color:
-yellow">yellow</b>. The value types are enclosed in brackets, e.g. \[bpn\]
-represents a BPN number such as "BPN00000000XS2X".
+yellow">yellow</b>. The value types are enclosed in brackets for brevity. Some
+exammples:
+
+- `[bpn]` represents a BPN number such as `"BPN00000000XS2X"`
+- `[did]` represents a DID, e.g. `"did:example:123"`
+- `[iso8601-timestamp]` is an ISO8601 formatted timestamp, e.g. `"2023-02-28T10:21:31Z"`
+- `[uuid]` is a UUIDv4 type of UUID, e.g. `f01d7219-d1aa-48c6-beaa-9e433e80ac79`
+- `[IRI]` is a URL-type of ID, but with extended characters, e.g. `"https://example.com/credentials/123"
 
 #### BPN Credential
 
@@ -453,17 +459,17 @@ represents a BPN number such as "BPN00000000XS2X".
         "https://w3id.org/security/suites/jws-2020/v1",
         "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
     ],
-    "id": "https://public.catena-x.org/contracts/behavior_twin.v1.pdf",
+    "id": "[IRI]",
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
+        <b style="color: yellow">"UseCaseFrameworkCondition"</b>
     ],
-    "issuanceDate": "somedate",
-    "expirationDate": "somedate",
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
         "id": "[did]",
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
         "usecase-agreement": {
             <b style="color: yellow">"value": "Behavior Twin",
             "type": "cx-behavior-twin"</b>,
@@ -503,7 +509,7 @@ Attestation of membership, currently used for Catena-X membership
     "credentialSubject": {
         "id": "[did]"
         <b style="color: yellow">"type": "MembershipCredential"</b>,
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
         <b style="color: yellow">"memberOf": "Catena-X"</b>,
         "status": "Active",
         "startTime": "[iso8601-timestamp]",
@@ -524,7 +530,7 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        <b style="color: yellow">"DismantlerCredentialCX"</b>
+        <b style="color: yellow">"DismantlerCredential"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
@@ -560,13 +566,13 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
+        <b style="color: yellow">"UseCaseFrameworkCondition"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]", //Optional field
     "credentialSubject": {
         "id": "[did]",
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
         "usecaseAgreement": {
             <b style="color: yellow">"value": "PCF",
             "type": "cx-pcf"</b>,
@@ -597,13 +603,13 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
+        <b style="color: yellow">"UseCaseFrameworkCondition"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
         "id": "[did]",
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
         "usecase-agreement": {
             <b style="color: yellow">"value": "Quality",
             "type": "cx-quality"</b>,
@@ -634,13 +640,13 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
+        <b style="color: yellow">"UseCaseFrameworkCondition"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
         "id": "[did]",
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
         "usecase-agreement": {
             <b style="color: yellow">"value": "Resiliency",
             "type": "cx-resiliency"</b>,
@@ -671,13 +677,13 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
+        <b style="color: yellow">"UseCaseFrameworkCondition"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]",
     "credentialSubject": {
         "id": "[did]",
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
         "usecase-agreement": {
             <b style="color: yellow">"value": "Sustainability",
             "type": "cx-sustainability"</b>,
@@ -708,13 +714,13 @@ Attestation of membership, currently used for Catena-X membership
     "issuer": "[did]",
     "type": [
         "VerifiableCredential",
-        <b style="color: yellow">"UseCaseFrameworkConditionCX"</b>
+        <b style="color: yellow">"UseCaseFrameworkCondition"</b>
     ],
     "issuanceDate": "[iso8601-timestamp]",
     "expirationDate": "[iso8601-timestamp]", //Optional field
     "credentialSubject": {
         "id": "[did]",
-        "holderIdentifier": "[bpn]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
         "usecaseAgreement": {
             <b style="color: yellow">"value": "ID_3.0_Trace",
             "type": "cx-traceability"</b>,
