@@ -740,15 +740,20 @@ Attestation of membership, currently used for Catena-X membership
 
 TODO: update deployment docs
 
+# Deployment
+
 A description of the overall structure of components including how to
 run and test it locally as well as on Kubernetes in the cloud is
 available in the GitHub repository:
-<https://github.com/eclipse-tractusx/managed-identity-wallets>
+<https://github.com/eclipse-tractusx/managed-identity-wallet>
 
-The following diagram provides an overview of the deployment structure
-in Kubernetes (AKS).
+The INT/DEV deployment is done using Helm charts. The charts are located in the
+`charts/` sub-directory of the repository. The charts are picked up by
+[ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and executed, resulting in
+a INT/DEV deployment.
 
-![](media/image10.png)
+Local development setup is aided by [Taskfile](https://taskfile.dev), detailed
+instructions are included in the README of the main repository.
 
 # Cross-cutting Concepts
 
