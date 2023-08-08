@@ -41,7 +41,8 @@ follows:
 
     - self-managed: connect an existing DID and external wallet provided by the
       owner or administrator of the BPN in order to issue verifiable
-      credentials to and request presentations from the related DID
+      credentials to and request presentations from the related DID (not in
+      scope)
 
 - Allow other service or user interface components as well as DID owners
   themselves to issue and store Verifiable Credentials
