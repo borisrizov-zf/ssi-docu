@@ -139,7 +139,7 @@ repositories, etc.
 
 The currently released API specification and documentation (INT environment)
 can be found under
-<https://managed-identity-wallets.int.demo.catena-x.net/docs>.
+<https://managed-identity-wallets-new.int.demo.catena-x.net/>.
 
 In general, the API covers the following functionality:
 
