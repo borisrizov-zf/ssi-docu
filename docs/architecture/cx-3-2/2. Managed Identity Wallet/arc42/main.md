@@ -110,6 +110,13 @@ service using the following technology stack:
 
 # Building Block View
 
+## Big Picture View
+
+This diagram is a zoomed out view of the MIW and the components it interacts
+with.
+
+![](../images/SingleInstanceDomainView.png)
+
 ## Overall System
 
 The service consists of a main API implementation using SpringBoot and a
