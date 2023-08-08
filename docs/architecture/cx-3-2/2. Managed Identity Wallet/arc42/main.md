@@ -126,16 +126,6 @@ PostgreSQL database to persist data ![](./images/whitebox_overall_system.png)
 The Java code is organized by responsibilities, e.g. routers, services,
 repositories, etc.
 
-- Routes:
-    - DID Document: DID resolution and management
-    - Verifiable Credential (VC): issuance and revocation of Verifiable Credentials
-    - Verifiable Presentation (VP): issuance and validation of Verifiable Presentations
-    - Wallet: create/read/update/delete (CRUD) management of identity wallets
-- Services:
-    - Business Partner Data Service: Abstraction of calls and response handling
-      of BPDM
-    - WalletService: General wallet management and orchestration logic
-
 # Runtime View
 
 The currently released API specification and documentation (INT environment)
