@@ -379,7 +379,7 @@ legal entity the user belongs to. Following are the available scopes:
 
 #### Example
 
-A decoded JWt access token might look like this:
+A decoded JWT access token might look like this:
 
 ```json
 # header
@@ -755,24 +755,26 @@ a INT/DEV deployment.
 Local development setup is aided by [Taskfile](https://taskfile.dev), detailed
 instructions are included in the README of the main repository.
 
-# Cross-cutting Concepts
+# Guiding Concepts
 
 The main driver behind the Managed Identity Wallet Service was the compliance
 and compatibility with W3C SSI standards in relation to GAIA-X principles. The
-solution is based on and uses a couple of standards and re-usable open-source
-components that can considered of overarching concern:
+solution is based on, and uses a couple of standards and re-usable open-source
+components:
 
 - W3C Decentralized Identifiers (DIDs) <https://www.w3.org/TR/did-core/>
-- W3C Verifiable Credential Data Model <https://www.w3.org/TR/vc-data-model/>
-
-TODO: add more items
+- W3C Verifiable Credentials Core Data Model <https://www.w3.org/TR/vc-data-model/#core-data-model>
+- W3C JSON-LD Basic Concepts <https://www.w3.org/TR/json-ld11/#basic-concepts>
+- W3C Securing Verifiable Credentials using JOSE and COSE
+  <https://www.w3.org/TR/vc-jose-cose/>, **NOTE**: the JsonWebSignature2020 is
+  discontinued <https://www.w3.org/TR/vc-jws-2020/>.
 
 # Design Decisions
 
 Decisions were made on several aspects as part of the sprint work in
 further development of the Managed Identity Wallet Service.
 
-### Selection of DID method
+## Selection of DID method
 
 For simplicity-sake we've chosen the `did:web` method, as it is easy to
 implement and reason about. We are fully aware that this method is not 100%
@@ -780,20 +782,12 @@ distributed as there is still a centralized body issuing the DNS records, but
 it will accelerate the development and adoption of SSI and MIW technologies,
 which will inevetably lead to the implementation of more complex did methods.
 
-### Concept and Implementation of Credential Revocation
-
-TODO: tbd
-
-### Concept and Implementation of Interaction with Self-Managed Wallets
-
-TODO: Not in the current plan, tbd...
-
 # Quality Requirements
 
 The work being done on the project has been focused on creating a base
 implementation of the Managed Identity Wallet Service. Thus some compromises
 have been met in order to progress with the development. Those points have been
-addressed in the [Risks and Technical Depts](#Risk and Technical Depts) section
+addressed in the [Risks and Technical Depts](#technical-debts) section
 in greater detail. Nevertheless we've focused on Security and Deployability.
 
 The Managed Identity Wallet sticks to the following Quality Gate
