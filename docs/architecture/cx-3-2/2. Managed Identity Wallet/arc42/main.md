@@ -812,21 +812,42 @@ requirements where relevant and applicable:
 - Security & Compliance: Container Scan
 - Security & Compliance: Infrastructure as Code
 
-# Risks and Technical Debts
+# Technical Debts 
 
-TODO: Add quality dept
+## DID Technical Debts
 
-## Performance
+- DID document only covers varification method. No service endpoints
 
-In tests especially with the EDC, response times of the Managed Wallet Service
-were rather poor, taking several seconds for operations like create wallet,
-credential issuance, creation or validation of presentations.
+## MIW Technical Debts
 
-**Recommendation**:
+- No real tenant system
+- Private Keys are AES encrypted and stored in the MIW Postgres database
+- No revocation service available
+- Summary Credential used as a token.
+- Only 1 verifiable credential (VC) in a verifiable presentation (VP) possible
+- Summary VC (S-VC) created with the private key of the auhtority
+- DID documents are stored in the MIW
+- Summary VC always get deleted when new CX-Credential is added to the
+  MIW
+- The creation of CX-Credential is located in the MIW, should be a dedicated
+  service outside of the wallet service
+- Only managed wallet available. No self-mangaged wallet
+- No Issuer Registry. Only one trusted issuer available
+- Download of VC to own wallet not possible
+- No varifiable data registry in place
+- No key rotation
+- No update possibility for credentials, they need to be deleted and new ones generated
 
-A more comprehensive monitoring framework should be established in order to
-detect the bottlenecks. Although important this step is being postponed, as it
-is not of high relevance to the current stage of the development.
+## Verifiable Credential
+
+- CX-Credentials are not consistent
+- Only Summary Credential will be used because of the http header limition of 8KB
+
+## SSI Library
+  
+- No complete JsonWebSignature2020. Only ED22519 is supported
+- No validation for JsonWebSignature2020 with RSA key
+- No Security valdition only Sercurity Assessment done, no attack vectors are tested
 
 # Glossary
 
@@ -842,8 +863,5 @@ is not of high relevance to the current stage of the development.
 | Issuer                         | An Issuer is an entity or system responsible for creating and issuing digital credentials or Verifiable Credentials, providing authenticated information about individuals, objects, or attributes, which can be reliably presented and verified by others in various applications and contexts.     |
 | Verifiable Presentation        | A Verifiable Presentation is a digitally signed collection of Verifiable Credentials that provides a secure and tamper-proof way to present and share authenticated information about an entity's attributes or qualifications.                                                                      |
 | Verifier                       | A Verifier is an entity or system responsible for validating and verifying the authenticity and integrity of digital signatures and claims presented in Verifiable Credentials or presentations.                                                                                                     |
-| Credential revocation          | Credential revocation refers to the process of invalidating or rendering unusable a previously issued digital credential, often due to changes in the entity's status or security concerns, ensuring that the credential can no longer be relied upon for authentication or authorization.           |
-| DIDComm / DID-Comm             | DIDCom (Decentralized Identifier Communication) is a protocol that enables secure and private communication between two parties using decentralized identifiers (DIDs), allowing for direct interaction while maintaining control over personal data and ensuring verifiable authenticity.           |
 | Managed Identity Wallet        | A Managed Identity Wallet is a secure digital repository that centrally manages and stores various forms of digital identity information, such as credentials, Verifiable Credentials, and keys, providing convenient access and controlled sharing while ensuring privacy and security.             |
-| Self-Managed Identity Wallet   | A Self-Managed Identity Wallet is a personal digital repository that empowers individuals to independently store, control, and share their digital identity information, such as credentials and Verifiable Credentials, offering enhanced privacy and autonomy in managing their own identity data. |
 
