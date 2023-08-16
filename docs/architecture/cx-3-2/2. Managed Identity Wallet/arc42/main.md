@@ -736,9 +736,41 @@ Attestation of membership, currently used for Catena-X membership
 }
 </pre>
 
-# Deployment View
+#### Summary Credential (scheduled for deprecation)
 
-TODO: update deployment docs
+The flow of creating a summary credential
+
+```plantuml
+```
+
+<pre>
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/jws-2020/v1",
+        "https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/UseCaseVC"
+    ],
+    "id": "[uuid]",
+    "issuer": "[did]",
+    "type": [
+        "VerifiableCredential",
+        <b style="color: yellow">"SummaryCredential"</b>
+    ],
+    "issuanceDate": "[iso8601-timestamp]",
+    "expirationDate": "[iso8601-timestamp]", //Optional field
+    "credentialSubject": {
+        "id": "[did]",
+        <b style="color: yellow">"holderIdentifier": "[bpn]"</b>,
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "[iso8601-timestamp]",
+        "jws": "[jws]",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "[did#key-id]"
+    }
+}
+</pre>
 
 # Deployment
 
@@ -750,7 +782,14 @@ available in the GitHub repository:
 The INT/DEV deployment is done using Helm charts. The charts are located in the
 `charts/` sub-directory of the repository. The charts are picked up by
 [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and executed, resulting in
-a INT/DEV deployment.
+a INT/DEV deployment into the respective Kubernetes cluster. ArgoCD polls the
+GitHub status continuously and executes the Helm charts when a new commit is
+detected on one of the target branches, e.g. "main". A benefit of ArgoCD is that it
+automatically detects variables from the Helm charts and displays them in the
+ArgoCD UI. This way the setup process is streamlined.
+
+[ArgoCD INT](https://argo.int.demo.catena-x.net/)
+[ArgoCD DEV](https://argo.dev.demo.catena-x.net/)
 
 Local development setup is aided by [Taskfile](https://taskfile.dev), detailed
 instructions are included in the README of the main repository.
