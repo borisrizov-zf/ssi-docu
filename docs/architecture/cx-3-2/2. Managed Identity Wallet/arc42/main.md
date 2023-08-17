@@ -20,15 +20,13 @@ Credentials](https://www.w3.org/TR/vc-data-model/) and create Verifiable
 Presentations on behalf of a certain legal entity as part of governance
 processes and use cases. In later steps, the same DID and credentials can be
 transferred to an external wallet managed by the legal entity itself, allowing
-self-sovereign data management and communication. Alternatively, a company can
-already bring its own DID upon onboarding and register it as a self-managed
-wallet for later interactions with managed wallets for credential and
-presentation exchange.
+self-sovereign data management and communication. A company can already bring
+its own DID upon onboarding and register it as a self-managed wallet for later
+interactions with managed wallets for credential and presentation exchange.
 
 ## Requirements Overview
 
-The basic requirements for the Managed Identity Wallet can be summarised as
-follows:
+The basic requirements for the Managed Identity Wallet are as follows:
 
 - Establish a base DID and associated base wallet as trust anchor for issuing
   operator related Verifiable Credentials
@@ -85,9 +83,9 @@ page](https://github.com/eclipse-tractusx).
 
 # System Scope and Context
 
-The Managed Identity Wallet Service is primarily used as a backend
-service for service composition or related components like EDC, but can
-also directly connect peer-to-peer with other DID agents.
+The Managed Identity Wallet Service is used as a backend service for service
+composition or related components like EDC, but can also connect peer-to-peer
+with other DID agents.
 
 ## Business Context
 
@@ -362,12 +360,11 @@ end group
 
 ### Permission Handling
 
-For the API access, technical users are authenticated based on bearer tokens
-(JWT) issued by an external IAM system such as Keycloak. Each API operation
-specifies, which scopes/roles are required in order to be allowed to execute
-this operations, additionally the BPN associated to a user (expected as a claim
-in the JWT) is considered when restricting access to the DID or wallet of the
-legal entity the user belongs to. Following are the available scopes:
+An IAM external service, such as Keycloak, authenticates users based on a JWT
+bearer token. Each API operation requires specific scopes/roles to execute the
+requested operation. Additionally the BPN associated with a user (expected as a
+claim in the JWT) is considered when restricting access. The following scopes
+are defined:
 
 - `view_wallets`
 - `add_wallets`
@@ -407,10 +404,10 @@ wallet belonging to the BPN.
 
 The Managed Identity Wallet service issues a couple of Verifiable Credentials
 with the DID of the base wallet as issuer related to membership and business
-partner data. For the credential types and data model of those Verifiable
-Credentials, an own JSON-LD context was defined in a separate GitHub repository
-<https://github.com/catenax-ng/product-core-schemas> and referenced as raw
-content in the Verifiable Credentials context
+partner data. The GitHub repository
+<https://github.com/catenax-ng/product-core-schemas> defines a custom JSON-LD
+schema for those credential types and data model. The Verifiable Credentials
+reference the raw content of the context in
 <https://raw.githubusercontent.com/catenax-ng/product-core-schemas/main/legalEntity>.
 The schema defines the following credential types:
 
@@ -787,19 +784,19 @@ a INT/DEV deployment into the respective Kubernetes cluster. ArgoCD polls the
 GitHub status continuously and executes the Helm charts when a new commit is
 detected on one of the target branches, e.g. "main". A benefit of ArgoCD is that it
 automatically detects variables from the Helm charts and displays them in the
-ArgoCD UI. This way the setup process is streamlined.
+ArgoCD UI.
 
 [ArgoCD INT](https://argo.int.demo.catena-x.net/)
 [ArgoCD DEV](https://argo.dev.demo.catena-x.net/)
 
-Local development setup is aided by [Taskfile](https://taskfile.dev), detailed
-instructions are included in the README of the main repository.
+[Taskfile](https://taskfile.dev) aids the local development setup, the README
+of the main repository includes detailed usage instructions.
 
 # Guiding Concepts
 
 The main driver behind the Managed Identity Wallet Service was the compliance
 and compatibility with W3C SSI standards in relation to GAIA-X principles. The
-solution is based on, and uses a couple of standards and re-usable open-source
+solution references, and uses a couple of standards and re-usable open-source
 components:
 
 - W3C Decentralized Identifiers (DIDs) <https://www.w3.org/TR/did-core/>
@@ -811,8 +808,8 @@ components:
 
 # Design Decisions
 
-Decisions were made on several aspects as part of the sprint work in
-further development of the Managed Identity Wallet Service.
+The working group made several decisions during the sprint work and further
+development of the Managed Identity Wallet Service.
 
 ## Selection of DID method
 
@@ -820,15 +817,15 @@ For simplicity-sake we've chosen the `did:web` method, as it is easy to
 implement and reason about. We are fully aware that this method is not 100%
 distributed as there is still a centralized body issuing the DNS records, but
 it will accelerate the development and adoption of SSI and MIW technologies,
-which will inevetably lead to the implementation of more complex did methods.
+which will lead to the implementation of more complex did methods.
 
 # Quality Requirements
 
 The work being done on the project has been focused on creating a base
-implementation of the Managed Identity Wallet Service. Thus some compromises
-have been met in order to progress with the development. Those points have been
-addressed in the [Risks and Technical Depts](#technical-debts) section
-in greater detail. Nevertheless we've focused on Security and Deployability.
+implementation of the Managed Identity Wallet Service. The current state has
+compromised on some aspects to further progress the development. The [Risks and
+Technical Depts](#technical-debts) section addresses those points in greater
+detail. Nevertheless we've focused on Security and Deployability.
 
 The Managed Identity Wallet sticks to the following Quality Gate
 requirements where relevant and applicable:
