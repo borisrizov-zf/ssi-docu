@@ -416,7 +416,7 @@ The schema defines the following credential types:
 
 **Note**: all examples highlight the important parts in <b style="color:
 yellow">yellow</b>. The value types are enclosed in brackets for brevity. Some
-exammples:
+examples:
 
 - `[bpn]` represents a BPN number such as `"BPN00000000XS2X"`
 - `[did]` represents a DID, e.g. `"did:example:123"`
