@@ -121,7 +121,7 @@ with.
 ## Overall System
 
 The service consists of a main API implementation using SpringBoot and a
-PostgreSQL database to persist data ![](./images/whitebox_overall_system.png)
+PostgreSQL database for persistance.
 
 The Java code is organized by responsibilities, e.g. routers, services,
 repositories, etc.
