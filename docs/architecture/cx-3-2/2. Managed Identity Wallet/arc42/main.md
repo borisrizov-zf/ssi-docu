@@ -881,7 +881,6 @@ requirements where relevant and applicable:
 
 ## SSI Library
   
-- No complete JsonWebSignature2020. Only ED22519 is supported
 - No validation for JsonWebSignature2020 with RSA key
 - No Security valdition only Sercurity Assessment done, no attack vectors are tested
 
