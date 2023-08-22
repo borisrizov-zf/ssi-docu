@@ -344,7 +344,6 @@ end box
 group "Verify/Validate Verifiable Presentation"
     User -> MIW: "/api/presentations/validation?withDateValidation=true" with VP
     group "Presentation Validation" 
-        MIW -> MIW: Check Presentation is not expired
         MIW -> MIW: Validate Presentation JsonLD
         MIW -> MIW: Verify Presentation Signature
     end group
